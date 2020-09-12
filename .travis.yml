@@ -1,0 +1,27 @@
+os: linux
+dist: xenial
+language: python
+python:
+- '3.8'
+cache: pip
+install:
+- pip install -r requirements.txt
+- pip install coveralls
+script:
+- python manage.py makemigrations
+- python manage.py migrate
+- coverage run manage.py test
+branches:
+  only:
+  - master
+after_success:
+- coveralls
+after_failure:
+- echo "Deployment failed"
+deploy:
+  provider: heroku
+  cleanup: true
+  api_key:
+    secure: CyMgPPXPp0+VzHtSYuF3VUpYeRLe+3DMMzOstRNVbZXDa6ezrUpymy4dDM5k9p4TXKRKb1S58cqYdEdc9sqEqvORahH5cn0TdQFyG7FonnHjXVpuEAe1Z870yQCDF/lF3VxPS/yz+ezNSEbwxKz0tzPW8F8oDRQUFibL1l7HVE8W7gBzwfT4bozfmfkSar0nS6kXeYFe+mAEIcS9pDagPp3nw4xN50frW6+ydVRGWu03C9Z5JswtWtuZeGtV+K///kvpF3+zBsinXGriplFZYpOnBPEMw7LKHjxoEkT19aImg7nzn9naCqQqHsQwbPwQcqIFA32IrF2f1BZJTsV+0RDcDZS+xknB8mb1y6yakLwFA/1912xx4g7SPBOzTLxw7vxVU8wanE274MymulbO+N/mEJVgMgHbW7pYi12o1p+tKXbaHFxzEB+lNuStvANyJOJ9uLoS5qYnjyT/c64v7oOH/kVa1ZDt3xSpmwoFTYslIda3KioS7zbEYd/k8pPB0Giv9U0DsCuosq4V6SvUqCRBgCD1IKH3gdEs9IOy43xebm6QxdaEGgnW/2zzU1K5jPuJEfu4JIbTgZyFXd8ElHX/rt0B2vSfnVj7XzgUY+fJ7K3EhelQF0foHkP8emINMA7N0UOcqiP5dHyU6rIuz6TQIarsbLqqxwsHDka92lY=
+  app: pollcreator
+  on: master
