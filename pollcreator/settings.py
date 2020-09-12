@@ -28,8 +28,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = os.environ.get('DEBUG_VALUE')
 DEBUG = False
-if 'DEBUG_VALUE' in os.environ:
-    DEBUG = False
+
 
 ALLOWED_HOSTS = ['pollcreator.heroku.com','localhost','127.0.0.1','0.0.0.0']
 
