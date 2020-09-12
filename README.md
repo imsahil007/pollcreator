@@ -16,7 +16,7 @@ The webapp also allows user to add image to each choice and each poll question.
 python manage.py runserver
 ```
 
-# Deployment - Heroku:
+# Deployment - Heroku(API Method):
 
 ```
 heroku login
@@ -55,11 +55,21 @@ heroku run bash
 
 
 # Tech Stack:
-* Django
-* JavaScript
-* Bootstrap
-* HTML
+* Frontend
+    * JavaScript
+    * Bootstrap
+    * HTML
+* Backend
+    * Django
+* Testing
+    * Travis-CI [![Build Status](https://travis-ci.org/imsahil007/pollcreator.svg?branch=master)](https://travis-ci.org/imsahil007/pollcreator)
+    * Coverall [![Coverage Status](https://coveralls.io/repos/github/imsahil007/pollcreator/badge.svg?branch=master)](https://coveralls.io/github/imsahil007/pollcreator?branch=master)
+* Deployment
+    * Heroku
+* Storage:
+    * Amazon S3 Bucket 
+    ![](res/AmazonS3.png)
 
 # Todos:
-* 404 and 500 pages
-* UI enhancement
+* [x] 404 and 500 pages
+* [ ] UI enhancement
