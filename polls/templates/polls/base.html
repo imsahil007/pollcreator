@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% if title %}
-        <title>PollAnywhere- {{ title }}</title>
+        <title>PollCreator- {{ title }}</title>
     {% else %}
-        <title>PollAnywhere</title>
+        <title>PollCreator</title>
     {% endif %}
     <!-- CSS only -->
 <link rel="shortcut icon"  type="image/png" href="{% static 'favicon.ico' %}"/>
@@ -23,7 +23,7 @@
 <body>
 <header>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="{% url 'poll-create' %}">PollAnywhere</a>
+  <a class="navbar-brand" href="{% url 'poll-create' %}">PollCreator</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
