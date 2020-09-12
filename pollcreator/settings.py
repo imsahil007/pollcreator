@@ -34,8 +34,6 @@ ALLOWED_HOSTS = ['pollcreator.heroku.com','localhost','127.0.0.1','0.0.0.0']
 # Application definition
 
 INSTALLED_APPS = [
-    'user.apps.UserConfig',
-    'polls.apps.PollsConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
