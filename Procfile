@@ -1,1 +1,1 @@
-web: gunicorn poll_anywhere.wsgi
+web: gunicorn pollcreator.wsgi
