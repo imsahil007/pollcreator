@@ -1,0 +1,80 @@
+{% extends "polls/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+        <div class='container'>
+            
+            <div class='row'>
+
+                <div class='col'></div>
+                <div class='col-md-6'>
+                  <div class="card mt-5 mx-auto text-white bg-dark" >
+                    <canvas id="pie-chart"  class="card-img-top"></canvas>
+                    <div class="card-body">
+                      <p class="card-text mx-auto text-center">{{poll.question}}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class='col'></div>
+
+
+                    
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+  <script>
+
+    var config = {
+      type: 'pie',
+      data: {
+        datasets: [{
+          data: {{ data|safe }},
+          backgroundColor: [
+            '#FF0000', '#ffa600', '#ff6361',  '#bc5090', '#808080', '#A9A9A9', '#C0C0C0', '#D3D3D3'
+          ],
+          label: 'Choices'
+        }],
+        labels: {{ labels|safe }}
+      },
+      options: {
+        responsive: true,
+        legend: {
+          labels:{
+            fontColor: 'white'
+          }
+        }
+      },
+      afterDraw: function(chart) {
+            if (chart.data.datasets[0].data.every(item => item === 0)) {
+                let ctx = chart.chart.ctx;
+                let width = chart.chart.width;
+                let height = chart.chart.height;
+
+                chart.clear();
+                ctx.save();
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('No data to display', width / 2, height / 2);
+                ctx.restore();
+            }
+        },
+    };
+
+    window.onload = function() {
+      var ctx = document.getElementById('pie-chart').getContext('2d');
+      window.myPie = new Chart(ctx, config);
+    };
+
+  </script>
+    </div>
+    {% if user.is_authenticated  and poll.author is user  %}
+        <div class='row mx-auto mb-5'>
+          <a type="button" href="{% url 'poll-delete' poll.id %}" class="mx-auto mt-2 btn btn-danger">Delete this poll</a>
+        </div>
+    {% endif %}
+
+        
+                
+        </div>
+    
+
+{% endblock content %}

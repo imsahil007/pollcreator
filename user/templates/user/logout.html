@@ -1,0 +1,15 @@
+{% extends "polls/base.html" %}
+{% block content %}
+
+      <h2>You have been logged out </h2>
+        <div class='container mx-auto'>
+      
+             {% comment %} <div class='border-to
+                <small class='text-muted' >
+              <a  href="{% url 'login' %}">Log in again </a>
+                </small>    
+            </div> {% endcomment %}
+            {% comment %} Add a goodbye image here {% endcomment %}
+        
+        </div>
+{% endblock content %}

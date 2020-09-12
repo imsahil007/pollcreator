@@ -1,0 +1,52 @@
+{% extends "polls/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}    
+<div class='container'>
+	<div class='row'>
+		<div class='col-md-3'></div>
+		<div class='col-md-6 mt-5'>
+        <script src="{% static 'add_poll.js' %}" language="Javascript" type="text/javascript"></script>
+
+			<form method='POST' enctype='multipart/form-data'>
+				{% csrf_token %}
+				<input type="hidden" name='counter' id="counter" value="{{counter}}"/>
+				<input type="hidden" name='submit_counter' id="submit_counter" value="{{submit_counter}}"/>
+				{% comment %} <fieldset class='form-group mx-auto'>
+					<legend class='border-bottom mb-4'>New Poll</legend>
+					<div class="form-group" id="div_id_title">
+						<label class='requiredField' for="id_title">Title</label>
+						<input type="text" class="form-control textInput" id="id_title" aria-describedby="emailHelp" placeholder="Poll title" required='required' maxlength="100">
+						</div>
+				</fieldset> {% endcomment %}
+                {{p_form|crispy}}
+                <div class='container p-0' id= 'choice_form'>
+                {% for cf in c_form %}
+					<div class='card mb-3'> 
+					<div class="card-header">
+						Option {{forloop.counter}}
+					</div>
+					<div class='card-body'>
+					{{cf|crispy}}</div></div>
+                   
+                {% endfor %}
+                </div>
+				<div class='row form-group mx-auto'>
+					<div class='col'>
+					<button class='btn btn-outline-info mx-auto' onclick='addInput()' >Add another choice</button>
+					</div>
+					<div class='col'>
+					<button class='btn btn-outline-info mx-auto' onclick='removeInput()' >Remove last choice</button>
+					</div>
+				</div>
+                
+				<div class='form-group mx-auto'>
+					<button class='btn btn-block btn-outline-success' id='submit-button' type='submit'>Submit Poll</button>
+				</div>
+			</form>
+            
+		</div>
+		<div class='col-md-3'></div>
+	</div>
+</div>
+{% endblock content %}

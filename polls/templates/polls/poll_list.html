@@ -1,0 +1,63 @@
+{% extends "polls/base.html" %}
+{% block content %}
+    <div class='container'>
+    <form class="form-inline d-flex justify-content-center md-form form-sm mt-5" method='get'>
+            <div class='row'>
+            <div class='col-md mb-4'>            
+            <input class="form-control" type="text" placeholder="Search Poll Title" aria-label="Search Poll Title" name='search_title'>
+            </div>
+            <div class='col-md mb-4'>
+            <button type="submit"  class="btn btn-primary">Search</button>
+             </div> 
+            </div>
+    </form>
+    <table class="table">
+    <thead>
+      <tr>
+        <th scope='col'>Unique id</th>
+        <th scope="col">Poll Title</th>
+        <th scope="col">Date</th>
+        <th scope="col">Results</th>
+        <th scope="col">Delete option</th>
+      </tr>
+    </thead>
+    <tbody>
+  
+    {% for poll in polls %}
+     <tr>
+      <td scope="row">{{ poll.pk }} </td>
+  
+      <td>{{poll.title}}</td>
+      <td>{{poll.time_posted| date:"d-M-Y"}}</td>
+      <td><button type="button" onclick="window.location.href='{% url 'poll-result' poll.link %}'" class="btn btn-outline-info">Result</button></td>
+      <td><button type="button" onclick="window.location.href='{% url 'poll-delete' poll.pk %}'" class="btn btn-outline-info">Delete</button></td>
+
+    </tr>   
+    {% endfor %}
+    </tbody>
+    </table>
+    {% if is_paginated %}
+    <nav aria-label="Paginator">
+  <ul class="pagination">
+    {% if page_obj.has_previous %}
+        <li class="page-item"> <a class='page-link' href='?page=1'>First</a></li>
+        <li class="page-item"><a class='page-link' href='?page={{ page_obj.previous_page_number}}'>Previous</a></li>
+      {% endif %}
+
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+             <li class="page-item active"><a class='page-link' href='?page={{ num }}'>{{ num }}</a></li>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3'%}
+                 <li class="page-item"><a class='page-link' href='?page={{ num }}'>{{ num }}</a></li>
+        {% endif %}
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+        <li class="page-item"> <a class='page-link' href='?page={{ page_obj.next_page_number}}'>Next</a></li>
+        <li class="page-item"> <a class='page-link' href='?page={{ page_obj.paginator.num_pages}}'>Last</a></li>
+      {% endif %}
+  </ul>
+</nav>  
+    {% endif %}
+    </div>
+{% endblock content %}

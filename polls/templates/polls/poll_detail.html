@@ -1,0 +1,80 @@
+{% extends "polls/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+
+<div class="alert alert-warning" role="alert">
+  You can only vote once!
+</div>
+        <div class='container'>
+
+            <div class='row mt-2' onload='global()'>
+                
+                <div class="input-group">
+                <input type="text" class="form-control"  id="clipboard-link" placeholder="" value="{{poll.link}}" aria-describedby="basic-addon2" readonly>
+                
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" onclick="clipboard()"><i class="fas fa-clipboard-list"></i></i></button>
+                    <a class="btn btn-outline-secondary" id="fb" type="button"><i class="fab fa-facebook"></i></a>
+                    <a class="btn btn-outline-secondary" id="twitter" type="button"><i class="fab fa-twitter"></i></a>
+                </div>
+                </div>
+                <script>
+                var url = window.location.origin.toString();
+                var link = "{{poll.link}}"
+                link = url+'/poll/'+link;
+                document.getElementById('clipboard-link').value = link;
+                    var fb = document.getElementById('fb');
+                    fb.setAttribute("href","https://www.facebook.com/sharer/sharer.php?u="+link);
+                    var twitter = document.getElementById('twitter');
+                    twitter.setAttribute("href","https://twitter.com/home?status="+link);
+                </script>
+            </div>
+            <div class='row'>
+                <div class='col-md-2'></div>
+                <div class='col-md-8 mt-2 px-0 card'>
+                    <div class='card-header'>
+                    Online Poll - {{ poll.title }}
+                    </div>
+                    <div class='card-body'>
+                    {% if poll.question_image.url is not None%}<img  src="{{poll.question_image.url}}" class="rounded mx-auto d-block mb-5" alt="question image">{% endif %}
+                        <p class="text-center font-weight-bold mx-auto">{{poll.question}}</p>
+                    <form method='POST'>
+                        {% csrf_token %}
+                    <div class='row'>
+                        {% for choice in choices  %}
+                        <div class='col-md-6 p-0 form-check'>
+                            <div class='card mx-2 mb-5 btn-outline-success'>
+                                {% if choice.choice_image.url is not None %}
+                                <img src="{{choice.choice_image.url}}" class="img-responsive mx-auto mt-3"  height="150px" alt="choice_image">
+                                {% comment %} <img class="card-img-top"  height="150px" width='auto' src="{{choice.choice_image.url}}" alt="Choice image"> {% endcomment %}
+                                {% endif %} 
+
+                            <div class='card-body p-0 mx-auto'>
+                            <input type="radio"  name="choice" id="{{choice.id}}-choice" class="invisible" value="{{choice.id}}" onchange='this.form.submit();'>
+                            <label class="btn btn-default btn-lg stretched-link" for="{{choice.id}}-choice"><i class="fas fa-vote-yea m-2"></i>{{choice.choice_text}}</label></input>
+                          
+                            </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                    </form>
+                    </div>
+                </div>
+                <div class='col-md-2 mt-2'></div>
+            </div>
+            <div class='row mx-auto mb-2'>
+                <a type="button" href="{% url 'poll-result' poll.link %}" class="mx-auto mt-2 btn btn-info">Check Results</a>
+            </div>
+           
+             {% if user.is_authenticated  and poll.author is user %}
+            
+                <div class='row mx-auto mt-2 mb-5'>
+                    <a type="button" href="{% url 'poll-delete' poll.id %}" class="mx-auto mt-2 btn btn-danger">Delete this poll</a>
+                </div>
+            {% endif %}
+        </div>
+
+{% endblock content %}
