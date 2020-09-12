@@ -34,6 +34,8 @@ ALLOWED_HOSTS = ['pollcreator.heroku.com','localhost','127.0.0.1','0.0.0.0']
 # Application definition
 
 INSTALLED_APPS = [
+    'user.apps.UserConfig',
+    'polls.apps.PollsConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -133,9 +135,9 @@ STATIC_URL = '/static/'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
-LOGIN_REDIRECT_URL = 'poll-create'
+LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'login'
-LOGOUT_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'login'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
