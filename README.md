@@ -67,8 +67,8 @@ heroku run bash
 * Deployment
     * Heroku
 * Storage:
-    * Amazon S3 Bucket 
-    ![](res/AmazonS3.png)
+    * Amazon S3 Bucket         
+                                ![](res/AmazonS3.png)
 
 # Todos:
 * [x] 404 and 500 pages
