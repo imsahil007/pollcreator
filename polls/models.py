@@ -34,9 +34,7 @@ class Poll(models.Model):
     def delete(self, *args, **kwargs):
         try:
             url = self.question_image.url
-            print('here')
             os.remove(url)
-            print('here2')
         except:
             print('No image present')
 
